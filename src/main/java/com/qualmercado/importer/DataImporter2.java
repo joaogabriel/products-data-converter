@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import com.qualmercado.importer.external.model.Exportacao;
 import com.qualmercado.importer.external.model.Registros;
 import com.qualmercado.importer.internal.model.Product;
+import com.qualmercado.importer.util.StringUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
@@ -92,7 +93,7 @@ public class DataImporter2 {
 			size = trechos[trechos.length - 1];
 			
 			product = new Product();
-			product.setDesc(normalizeText(reg.getNome()));
+			product.setDesc(StringUtil.normalizeText(reg.getNome()));
 			product.setBarcode(reg.getBarras().trim());
 			product.setImported(true);
 			
@@ -147,23 +148,6 @@ public class DataImporter2 {
 		unities.add("lta");
 		
 		return unities;
-	}
-	
-	private static String normalizeText(String str) {
-		final String WHITE_SPACE = " ";
-		StringBuilder text = new StringBuilder();
-		
-		String[] words = str.split(WHITE_SPACE);
-		
-		for (String word : words) {
-			if (!word.trim().isEmpty()) {
-				text.append(word.substring(0, 1).toUpperCase())
-					.append(word.substring(1).toLowerCase())
-					.append(WHITE_SPACE);
-			}
-		}
-		
-		return text.toString();
 	}
 	
 	private void eliminateInconsistencies(List<Product> products) {
