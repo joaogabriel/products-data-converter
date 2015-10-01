@@ -6,7 +6,7 @@ public class Product {
 	private String category;
 	private String image;
 	private Boolean recommended;
-	private Integer size;
+	private Number size;
 	private String unity;
 	private String barcode;
 	private String desc;
@@ -46,11 +46,11 @@ public class Product {
 		this.recommended = recommended;
 	}
 
-	public Integer getSize() {
+	public Number getSize() {
 		return size;
 	}
 
-	public void setSize(Integer size) {
+	public void setSize(Number size) {
 		this.size = size;
 	}
 

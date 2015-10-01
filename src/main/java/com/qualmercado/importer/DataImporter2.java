@@ -119,17 +119,6 @@ public class DataImporter2 {
 		return str.matches(".*[0-9].*") && !str.contains(",") && !str.contains(".");
 	}
 	
-	/*
-	private boolean isNumeric(String str) {
-		try {
-			Integer.parseInt(str);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-	*/
-	
 	private Integer extractNumber(String str) {
 		Pattern pattern = Pattern.compile("-?\\d+");
 		Matcher matcher = pattern.matcher(str);

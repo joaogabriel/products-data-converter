@@ -16,7 +16,19 @@ public class StringUtil {
 			}
 		}
 		
-		return text.toString();
+		return text.toString().trim();
+	}
+	
+	public static boolean isNumeric(String str) {
+		try {
+			str = str.replace(",", ".");
+			
+			Double.parseDouble(str);
+			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 }
