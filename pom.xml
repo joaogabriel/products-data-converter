@@ -6,8 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
-		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-mapper-asl</artifactId> 
-			<version>1.9.13</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.codehaus.jettison</groupId>
@@ -20,12 +18,19 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.8</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.8.3</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
