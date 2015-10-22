@@ -6,46 +6,47 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.qualmercado.importer.external.model.Exportacao;
-import com.qualmercado.importer.external.model.Registros;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.qualmercado.importer.internal.model.Product;
-import com.qualmercado.importer.util.StringUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
-/**
- * http://stackoverflow.com/questions/21283052/com-thoughtworks-xstream-mapper-cannotresolveclassexception
- * 
- * http://www.leveluplunch.com/java/examples/convert-xml-to-from-json-using-xstream/
- *
- */
-public class DataImporter2 {
+public class DataImporterPodGtin {
 
 	private int indice;
 	
 	public static void main(String[] args) {
 		
-		DataImporter2 xmlToJson = new DataImporter2();
+		DataImporterPodGtin xmlToJson = new DataImporterPodGtin();
 		xmlToJson.parse();
 		
 	}
 	
 	public void parse() {
 		try {
-			InputStream xmlFile = DataImporter2.class.getResourceAsStream("/pao-expresso/estoque.xml");
+			InputStream jsonFile = DataImporterPodGtin.class.getResourceAsStream("/pod-gtin/pod_gtin.json");
 			
-			XStream xstream = new XStream();
-			xstream.alias("Exportacao", Exportacao.class);
-			xstream.autodetectAnnotations(true);
-			xstream.ignoreUnknownElements();
+			ObjectMapper mapper = new ObjectMapper();
+
+			//JSON from file to Object
+//			dataset = mapper.readValue(jsonFile, dataset.getClass());
+			JsonNode node = mapper.readTree(jsonFile);
+			JsonNode fields = node.get(0).get("fields");
+			JsonNode produto = null;
 			
-			Exportacao exportacao = new Exportacao();
-			xstream.fromXML(xmlFile, exportacao);
+			for (JsonNode prod : node) {
+				extractData(prod);
+			}
+			
+//			List<PODField> fieldsList = mapper.readValue(fields, mapper.getTypeFactory().constructCollectionType(List.class, PODField.class));
+//			Collection<PODField> readValues = new ObjectMapper().readValue(fields, new TypeReference<Collection<PODField>>() { });
 			
 			Product product = null;
 			List<Product> products = new ArrayList<Product>();
 			
-			System.out.println("Total de produtos: " + exportacao.getRegistros().size());
+			/*System.out.println("Total de produtos: " + exportacao.getRegistros().size());
 			System.out.println("======================");
 			
 			for (Registros reg : exportacao.getRegistros()) {
@@ -54,7 +55,7 @@ public class DataImporter2 {
 				if (product != null) {
                     products.add(product);
 				}
-			}
+			}*/
 			
 			System.out.println("Total products before elimination of inconsistencies: " + products.size());
 			
@@ -82,12 +83,12 @@ public class DataImporter2 {
 		}
 	}
 	
-	private Product extractData(Registros reg) {
+	private Product extractData(JsonNode node) {
 		String size = null;
 		String unity = null;
 		Product product = null;
 		Integer validSize = null;
-		String trechos[] = reg.getNome().trim().split(" ");
+		/*String trechos[] = reg.getNome().trim().split(" ");
 		
 		if (trechos.length > 1) {
 			size = trechos[trechos.length - 1];
@@ -110,7 +111,7 @@ public class DataImporter2 {
 				product.setSize(1);
 				product.setUnity(reg.getUnidade().toLowerCase().trim());
 			}
-		}
+		}*/
 		
 		return product;
 	}

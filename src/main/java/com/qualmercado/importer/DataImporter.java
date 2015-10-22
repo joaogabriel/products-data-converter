@@ -30,7 +30,7 @@ public class DataImporter {
 	
 	public void parse() {
 		try {
-			InputStream xmlFile = DataImporter.class.getResourceAsStream("/estoque.xml");
+			InputStream xmlFile = DataImporter.class.getResourceAsStream("/pao-expresso/estoque.xml");
 			
 			XStream xstream = new XStream();
 			xstream.alias("Exportacao", Exportacao.class);
@@ -53,7 +53,7 @@ public class DataImporter {
 				productMarketResults = new ProductMarketResults();
 				productMarketResults.setMarket("xpto");
 				productMarketResults.setProduct("abc");
-				productMarketResults.setPrice(reg.getPreco_consumidor());
+				productMarketResults.setPrice(reg.getPrecoConsumidor());
 				
 				results.add(productMarketResults);
 			}

@@ -21,18 +21,18 @@ public class Registros implements Serializable {
 	private String descricao;
 	
 	@XStreamAlias("PRECO_CONSUMIDOR")
-	private String preco_consumidor;
+	private String precoConsumidor;
 	
 	@XStreamAlias("UND_V")
 	private String unidade;
 
-	public Registros(String codigo, String barras, String nome, String descricao, String preco_consumidor) {
+	public Registros(String codigo, String barras, String nome, String descricao, String precoConsumidor) {
 		super();
 		this.codigo = codigo;
 		this.barras = barras;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.preco_consumidor = preco_consumidor;
+		this.precoConsumidor = precoConsumidor;
 	}
 
 	public String getCodigo() {
@@ -67,14 +67,14 @@ public class Registros implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getPreco_consumidor() {
-		return preco_consumidor;
+	public String getPrecoConsumidor() {
+		return precoConsumidor;
 	}
-
-	public void setPreco_consumidor(String preco_consumidor) {
-		this.preco_consumidor = preco_consumidor;
+	
+	public void setPrecoConsumidor(String precoConsumidor) {
+		this.precoConsumidor = precoConsumidor;
 	}
-
+	
 	public String getUnidade() {
 		return unidade;
 	}
