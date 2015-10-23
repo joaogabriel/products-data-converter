@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.qualmercado.importer.internal.model.Product;
+import com.qualmercado.importer.util.ProductUtil;
 import com.qualmercado.importer.util.StringUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -74,7 +75,7 @@ public class HtmlImporter {
 			if (getAcceptUnities().contains(lastFragment)) {
 				if (StringUtil.isNumeric(descFragments[descFragments.length - 2])) {
 					//product.setSize(Integer.parseInt(descFragments[descFragments.length - 2]));
-					defineProductSize(product, descFragments[descFragments.length - 2]);
+					ProductUtil.defineSize(product, descFragments[descFragments.length - 2]);
 					product.setUnity(descFragments[descFragments.length - 1]);
 				}
 				
@@ -89,7 +90,7 @@ public class HtmlImporter {
 						String size = lastFragment.replace(unity, "");
 						
 						if (StringUtil.isNumeric(size)) {
-							defineProductSize(product, size);
+							ProductUtil.defineSize(product, size);
 						
 							if (unity.equals("k")) {
 								unity = "kg";
@@ -115,15 +116,6 @@ public class HtmlImporter {
 		return product;
 	}
 
-	private void defineProductSize(Product product, String size) {
-		if (size.contains(",")) {
-			size = size.replace(",", ".");
-			product.setSize(Double.parseDouble(size));
-		} else {
-			product.setSize(Integer.parseInt(size));
-		}
-	}
-	
 	private List<String> getAcceptUnities() {
 		List<String> unities = new ArrayList<String>();
 		

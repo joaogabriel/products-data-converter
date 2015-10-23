@@ -3,12 +3,11 @@ package com.qualmercado.importer;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.qualmercado.importer.external.model.Exportacao;
 import com.qualmercado.importer.external.model.Registros;
 import com.qualmercado.importer.internal.model.Product;
+import com.qualmercado.importer.util.ProductUtil;
 import com.qualmercado.importer.util.StringUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -21,8 +20,6 @@ import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
  */
 public class DataImporter2 {
 
-	private int indice;
-	
 	public static void main(String[] args) {
 		
 		DataImporter2 xmlToJson = new DataImporter2();
@@ -62,7 +59,7 @@ public class DataImporter2 {
 			
 			System.out.println("Total products after elimination of inconsistencies: " + products.size());
 			
-			printData(products);
+			ProductUtil.printData(products);
 			
 			// create a new xstream object w/json provider
 			XStream xstreamForJson = new XStream(new JettisonMappedXmlDriver());
@@ -74,14 +71,6 @@ public class DataImporter2 {
 		
 	}
 
-	private void printData(List<Product> products) {
-		for (Product prod : products) {
-			System.out.println("#" + ++indice);
-		    System.out.println(prod);
-		    System.out.println("=======================================================================================");
-		}
-	}
-	
 	private Product extractData(Registros reg) {
 		String size = null;
 		String unity = null;
@@ -97,8 +86,8 @@ public class DataImporter2 {
 			product.setBarcode(reg.getBarras().trim());
 			product.setImported(true);
 			
-			if (containsIntegerNumber(size)) {
-				validSize = extractNumber(size);
+			if (StringUtil.containsIntegerNumber(size)) {
+				validSize = StringUtil.extractNumber(size);
 				unity = size.replace(validSize.toString(), "").trim();
 
 				product.setSize(validSize);
@@ -113,17 +102,6 @@ public class DataImporter2 {
 		}
 		
 		return product;
-	}
-	
-	private boolean containsIntegerNumber(String str) {
-		return str.matches(".*[0-9].*") && !str.contains(",") && !str.contains(".");
-	}
-	
-	private Integer extractNumber(String str) {
-		Pattern pattern = Pattern.compile("-?\\d+");
-		Matcher matcher = pattern.matcher(str);
-		matcher.find();
-		return Integer.parseInt(matcher.group());
 	}
 	
 	private List<String> getAcceptUnities() {
