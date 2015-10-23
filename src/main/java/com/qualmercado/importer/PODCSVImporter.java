@@ -1,8 +1,9 @@
 package com.qualmercado.importer;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class PODCSVImporter {
 	}
 
 	public void parse() {
-		String csvFile = "C:\\env-dev\\git\\products-data-converter\\src\\main\\resources\\pod-gtin\\pod_gtin.csv";
+		InputStream csvFile = HtmlImporter.class.getResourceAsStream("/pod-gtin/pod_gtin.csv");
 		BufferedReader buffReader = null;
 		String line = "";
 		String csvSplit = ";";
@@ -31,7 +32,7 @@ public class PODCSVImporter {
 		List<Product> products = new ArrayList<Product>();
 		
 		try {
-			buffReader = new BufferedReader(new FileReader(csvFile));
+			buffReader = new BufferedReader(new InputStreamReader(csvFile));
 			
 			while ((line = buffReader.readLine()) != null) {
 				String[] product = line.split(csvSplit);
