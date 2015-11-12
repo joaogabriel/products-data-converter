@@ -155,6 +155,7 @@ public class PODCSVImporter {
 		product.setImage(podProduct.getGtinImage());
 		product.setPackaging(podProduct.getPackageTypeName());
 		product.setImported(true);
+		product.setRecommended(false);
 		
 		return product;
 	}
