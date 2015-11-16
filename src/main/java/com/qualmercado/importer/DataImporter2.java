@@ -85,6 +85,7 @@ public class DataImporter2 {
 			product.setDesc(StringUtil.normalizeText(reg.getNome()));
 			product.setBarcode(reg.getBarras().trim());
 			product.setImported(true);
+			product.setRecommended(false);
 			
 			if (StringUtil.containsIntegerNumber(size)) {
 				validSize = StringUtil.extractNumber(size);
